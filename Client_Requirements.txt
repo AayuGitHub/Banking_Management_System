@@ -1,0 +1,419 @@
+================================================================
+                BANKING MANAGEMENT SYSTEM
+              Project Requirements Document
+================================================================
+
+OVERVIEW
+--------
+A local bank wants a secure console-based Banking Management
+System to replace its manual record-keeping process.
+
+The application should allow bank employees to:
+  1. Create customer accounts
+  2. View customer accounts
+  3. Search customer accounts
+  4. Update customer information
+  5. Close customer accounts
+  6. Deposit money
+  7. Withdraw money
+  8. Transfer money between accounts
+  9. View transaction history
+  10. Persist all data between application restarts
+
+The application must be built using Object-Oriented
+Programming (OOP) and must save all information automatically.
+
+
+----------------------------------------------------------------
+LEARNING GOAL
+----------------------------------------------------------------
+Unlike previous projects, this project introduces MONEY
+MOVEMENT and IMMUTABLE TRANSACTION RECORDS.
+
+Money should never simply "change." Every financial operation
+must leave a permanent transaction record.
+
+Example flow:
+
+    Customer A
+        |
+        v
+    Withdraw Rs.500
+        |
+        v
+    Transaction Record Created
+        |
+        v
+    Balance Updated
+
+
+----------------------------------------------------------------
+FUNCTIONAL REQUIREMENTS - MAIN MENU
+----------------------------------------------------------------
+
+    ================================
+        Banking Management System
+    ================================
+    1.  Create Account
+    2.  View All Accounts
+    3.  Search Account
+    4.  Update Account
+    5.  Close Account
+    6.  Deposit Money
+    7.  Withdraw Money
+    8.  Transfer Money
+    9.  View Transaction History
+    10. View Account Statement
+    11. Exit
+
+
+----------------------------------------------------------------
+ACCOUNT INFORMATION
+----------------------------------------------------------------
+Each account should contain:
+  - Account ID
+  - Customer Name
+  - Phone Number
+  - Email Address
+  - Account Type (Savings / Current)
+  - Current Balance
+  - Account Status (Active / Closed)
+
+Example:
+    Account ID : ACC101
+    Customer   : Aayush
+    Phone      : 9876543210
+    Email      : aayush@email.com
+    Type       : Savings
+    Balance    : Rs.15,500
+    Status     : Active
+
+
+----------------------------------------------------------------
+TRANSACTION INFORMATION
+----------------------------------------------------------------
+Every financial operation should create a transaction record.
+
+Each transaction should contain:
+  - Transaction ID
+  - Account ID
+  - Transaction Type
+  - Amount
+  - Date & Time
+  - Description
+
+Example:
+    Transaction ID : TXN1001
+    Account ID     : ACC101
+    Type           : Deposit
+    Amount         : Rs.5,000
+    Date           : 01-07-2026 10:15 AM
+    Description    : Cash Deposit
+
+
+----------------------------------------------------------------
+TRANSFER RECORD
+----------------------------------------------------------------
+Money transfers involve two accounts. Store:
+  - Transfer ID
+  - From Account ID
+  - To Account ID
+  - Amount
+  - Date & Time
+
+Example:
+    Transfer ID : TR1001
+    From        : ACC101
+    To          : ACC205
+    Amount      : Rs.2,500
+    Date        : 01-07-2026 11:45 AM
+
+
+================================================================
+FEATURE SPECIFICATIONS
+================================================================
+
+FEATURE 1 - CREATE ACCOUNT
+----------------------------------------------------------------
+Employee enters:
+  - Customer Name
+  - Phone
+  - Email
+  - Account Type
+  - Initial Deposit
+
+Rules:
+  - Account ID is generated automatically.
+  - Initial balance = Initial Deposit.
+
+
+FEATURE 2 - VIEW ACCOUNTS
+----------------------------------------------------------------
+Display all customer accounts.
+
+Example display format:
+    ------------------------------------
+    Account ID :
+    Customer   :
+    Phone      :
+    Type       :
+    Balance    :
+    Status     :
+    ------------------------------------
+
+
+FEATURE 3 - SEARCH ACCOUNT
+----------------------------------------------------------------
+Allow searching by:
+  - Account ID
+  - Customer Name
+
+
+FEATURE 4 - UPDATE ACCOUNT
+----------------------------------------------------------------
+Allowed to update:
+  - Name
+  - Phone
+  - Email
+
+NOT allowed to update:
+  - Account ID
+  - Balance
+
+
+FEATURE 5 - CLOSE ACCOUNT
+----------------------------------------------------------------
+An account can be closed ONLY if:
+  - Balance = Rs.0
+  - Account is Active
+
+Otherwise, display an appropriate error message.
+
+
+FEATURE 6 - DEPOSIT MONEY
+----------------------------------------------------------------
+Workflow:
+
+    Enter Account ID
+        |
+        v
+    Validate account exists
+        |
+        v
+    Validate amount > 0
+        |
+        v
+    Increase balance
+        |
+        v
+    Create transaction record
+
+
+FEATURE 7 - WITHDRAW MONEY
+----------------------------------------------------------------
+Workflow:
+
+    Enter Account ID
+        |
+        v
+    Validate account exists
+        |
+        v
+    Validate amount > 0
+        |
+        v
+    Check sufficient balance
+        |
+        v
+    Deduct balance
+        |
+        v
+    Create transaction record
+
+If balance is insufficient, display:
+    "Insufficient Balance."
+
+
+FEATURE 8 - TRANSFER MONEY
+----------------------------------------------------------------
+Workflow:
+
+    Enter Sender Account ID
+        |
+        v
+    Enter Receiver Account ID
+        |
+        v
+    Validate both accounts
+        |
+        v
+    Validate sender has enough balance
+        |
+        v
+    Deduct sender balance
+        |
+        v
+    Credit receiver balance
+        |
+        v
+    Create transfer record
+        |
+        v
+    Create withdrawal transaction
+        |
+        v
+    Create deposit transaction
+
+
+FEATURE 9 - TRANSACTION HISTORY
+----------------------------------------------------------------
+Display every transaction, including:
+  - Transaction ID
+  - Account
+  - Type
+  - Amount
+  - Date
+  - Description
+
+
+FEATURE 10 - ACCOUNT STATEMENT
+----------------------------------------------------------------
+Display, in order:
+
+    Customer Information
+        |
+        v
+    Current Balance
+        |
+        v
+    Complete Transaction History
+        |
+        v
+    Opening Balance
+        |
+        v
+    Closing Balance
+
+
+FEATURE 11 - SAVE DATA
+----------------------------------------------------------------
+Automatically save:
+  - Accounts
+  - Transactions
+  - Transfers
+
+Automatically load everything when the application starts.
+
+
+================================================================
+VALIDATION RULES
+================================================================
+
+ACCOUNTS
+----------------------------------------------------------------
+  - Name cannot be empty.
+  - Phone must contain digits only.
+  - Email should not be empty.
+  - Initial deposit cannot be negative.
+
+DEPOSITS
+----------------------------------------------------------------
+  - Amount must be greater than zero.
+
+WITHDRAWALS
+----------------------------------------------------------------
+  - Amount must be greater than zero.
+  - Cannot exceed available balance.
+
+TRANSFERS
+----------------------------------------------------------------
+  - Sender and receiver cannot be the same account.
+  - Both accounts must exist.
+  - Sender must have sufficient balance.
+
+
+================================================================
+SUGGESTED FOLDER STRUCTURE
+================================================================
+
+    BankingSystem/
+    |-- main.py
+    |-- Account.py
+    |-- Transaction.py
+    |-- Transfer.py
+    |-- BankManager.py
+    |-- accounts.json
+    |-- transactions.json
+    |-- transfers.json
+
+
+================================================================
+DELIVERABLES
+================================================================
+    [x] Account Management
+    [x] Deposit Money
+    [x] Withdraw Money
+    [x] Transfer Money
+    [x] Transaction History
+    [x] Account Statements
+    [x] JSON Persistence
+    [x] Clean OOP Design
+    [x] Modular Code
+    [x] Business Rule Validation
+
+
+================================================================
+DESIGN CONSTRAINTS
+================================================================
+  - main.py should handle only user interaction.
+  - Account should represent a single bank account.
+  - Transaction should represent a single financial transaction.
+  - Transfer should represent money movement between two
+    accounts.
+  - BankManager should contain all business logic.
+  - JSON persistence should happen only inside BankManager.
+  - Every financial operation must create a transaction record.
+  - Never modify transaction history after it is created
+    (transactions are immutable).
+  - Use unique IDs for accounts, transactions, and transfers.
+  - Use type hints and meaningful docstrings.
+  - Avoid duplicated code.
+  - Keep each method focused on one responsibility.
+
+
+================================================================
+MENTOR CHALLENGE (NO HINTS)
+================================================================
+Before writing any code, answer these questions:
+
+  1. How many classes will you create?
+  2. What is the responsibility of each class?
+  3. Which class should own the accounts, transactions, and
+     transfers?
+  4. How will deposits affect account balance?
+  5. How will withdrawals validate sufficient funds?
+  6. How will transfers update two accounts safely?
+  7. Why should transaction records never be modified?
+  8. Which methods belong in Account, Transaction, and Transfer?
+  9. Which methods belong in BankManager?
+  10. How will you ensure money is never accidentally created or
+      lost during transfers?
+
+
+================================================================
+LEARNING OUTCOMES
+================================================================
+By completing this project, you will learn:
+  - Multi-object interaction
+  - Financial transaction modeling
+  - Immutable transaction history
+  - Business rule validation
+  - Account balance management
+  - Money transfer workflows
+  - Data consistency
+  - More advanced object-oriented design
+  - Designing software that models real-world financial systems
+
+================================================================
+                        END OF DOCUMENT
+================================================================
