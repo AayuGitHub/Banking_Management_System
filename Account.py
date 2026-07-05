@@ -2,7 +2,7 @@ import uuid
 
 class Account:
 
-    def __init__(self, customerName: str, customerPhone: str, customerEmail: str, accountType: str, currentBalance: int, accountStatus: str = False, accountId: str = None):
+    def __init__(self, customerName: str, customerPhone: str, customerEmail: str, accountType: str, currentBalance: int, accountStatus: str = "Inactive", accountId: str = None):
         self.accountId = accountId if accountId else str(uuid.uuid4())
         self.customerName = customerName
         self.customerPhone = customerPhone

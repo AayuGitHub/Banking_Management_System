@@ -65,7 +65,7 @@ FUNCTIONAL REQUIREMENTS - MAIN MENU
     9.  View Transaction History
     10. View Account Statement
     11. Exit
-
+    
 
 ----------------------------------------------------------------
 ACCOUNT INFORMATION
